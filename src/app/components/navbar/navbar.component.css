@@ -1,0 +1,11 @@
+.navbar {
+    background-color: #c59a4e;
+    display: flex;
+    justify-content: center;
+    height: 75px;
+}
+
+.navbar a {
+    font-size: 25px;
+    color: white;
+}

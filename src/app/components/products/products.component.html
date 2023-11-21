@@ -1,0 +1,7 @@
+<div class="row justify-content-center">
+    <div class="col-3 m-2 p-2 card" *ngFor="let product of products">
+        <img class="center-image" [src]="product.image" />
+        <p class="text-center">{{product.name}}</p>
+        <p class="text-center">{{product.price}}₪</p>
+    </div>
+</div>

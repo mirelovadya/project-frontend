@@ -1,0 +1,88 @@
+/* You can add global styles to this file, and also import other style files */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* material textfield */
+.material-textfield {
+    position: relative;
+}
+
+.material-textfield label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: gray;
+    padding: 0 0.3rem;
+    margin: 0 0.5rem;
+    transition: 0.1s ease-out;
+    transform-origin: left top;
+    pointer-events: none;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.material-textfield input,
+.material-textfield textarea {
+    outline: none;
+    border: 1px solid #363062;
+    border-radius: 5px;
+    padding: 1rem 0.7rem;
+    color: gray;
+    transition: 0.1s ease-out;
+    width: 350px;
+}
+
+.material-textfield input:focus,
+.material-textfield textarea:focus {
+    border-color: #363062;
+}
+
+.material-textfield input:focus+label,
+.material-textfield textarea:focus+label {
+    color: #282828;
+    top: 0;
+    transform: translateY(-50%) scale(0.9);
+}
+
+.material-textfield input:not(:placeholder-shown)+label,
+.material-textfield textarea:not(:placeholder-shown)+label {
+    top: 0;
+    transform: translateY(-50%) scale(0.9);
+}
+
+.material-textfield select {
+    width: 350px;
+    height: 55px;
+    border: 1px solid #363062;
+    border-radius: 5px;
+}
+
+.material-textfield i {
+    position: relative;
+    z-index: 1;
+    right: 30px;
+    top: 1px;
+    color: #7b7b7b;
+    cursor: pointer;
+    width: 0;
+}
+
+.gold_btn {
+    width: 350px;
+    background-color: #c59a4e;
+    border: 1px solid #c59a4e;
+    border-radius: 8px;
+    height: 60px;
+    margin: auto;
+    display: block;
+}
+
+.gold_btn span {
+    color: white;
+}

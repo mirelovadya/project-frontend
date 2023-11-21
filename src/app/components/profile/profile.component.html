@@ -1,0 +1,268 @@
+<div class="page">
+
+    <div class="d-flex justify-content-center">
+
+        <!-- view personal details -->
+        <div *ngIf="!editDetails && user" class="mt-3 mb-5 card pt-3">
+
+            <h3><b>{{user.firstName}}</b> &nbsp;<b>{{user.lastName}}</b></h3>
+            <p (click)="editDetails=true" class="textAlign blueColor link">update details
+            </p>
+            <div class="px-1 mt- mb-4 pb-5">
+                <div>
+
+                    <!-- full nume label -->
+                    <div class="my-3">
+                        <label class="labelTitle">Full name</label>
+                        <br />
+                        <label class="labelContent">{{user.firstName}} {{user.lastName}}</label>
+                    </div>
+
+
+                    <!-- email label -->
+                    <div class="my-3">
+                        <label class="labelTitle">Email</label>
+                        <br />
+                        <label class="labelContent">{{user.email}}</label>
+                    </div>
+
+                    <div class="my-3">
+                        <label class="labelTitle">last login date</label>
+                        <br />
+                        <label class="labelContent">{{user.lastLoginDate}}</label>
+                    </div>
+
+                    <div class="card min-card my-2" *ngFor="let credit of user.credits"  [ngClass]="{'gold-border': credit.defaultCredit}">
+
+                        <!-- creditNumber label -->
+                        <div class="my-3">
+                            <label class="labelTitle">Credit number</label>
+                            <br />
+                            <label class="labelContent">{{credit.creditNumber}}</label>
+                        </div>
+
+                        <!-- creditDate label -->
+                        <div class="my-3">
+                            <label class="labelTitle">Credit Date</label>
+                            <br />
+                            <label class="labelContent">{{credit.creditDate}}</label>
+                        </div>
+
+                        <!-- creditCvv label -->
+                        <div class="my-3">
+                            <label class="labelTitle">Credit Cvv</label>
+                            <br />
+                            <label class="labelContent">{{credit.creditCvv}}</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <!-- edit password link -->
+                <div (click)="openPasswodModal()">
+                    <p class="blueColor link">change password</p>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <!-- edit personal details -->
+        <form *ngIf="editDetails" class="my-5 pb-5" role="form" #personalDeatils="ngForm"
+            (ngSubmit)="savePersonalDetails()">
+            <div>
+
+                <!-- full name field -->
+                <div class="mt-3 mb-4">
+                    <div class="container">
+                        <div class="material-textfield">
+                            <input class="grayBackground" type="text" id="firsName" name="firsName"
+                                [(ngModel)]="user.firsName" placeholder=" " required #firsName="ngModel">
+                            <label class="grayBackground">First name</label>
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="container p-0" *ngIf="firsName.invalid && (firsName.dirty || firsName.touched)">
+                            <div class="material-textfield" class="alert alert-danger new-allert-denger-style">
+                                <div *ngIf="firsName && firsName.errors && firsName.errors['required']" translate>
+                                    first name requierd
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-3 mb-4">
+                    <div class="container">
+                        <div class="material-textfield">
+                            <input class="grayBackground" type="text" id="lastName" name="lastName"
+                                [(ngModel)]="user.lastName" placeholder=" " required #lastName="ngModel">
+                            <label class="grayBackground">Last name</label>
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <div class="container" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                        <div class="material-textfield" class="alert alert-danger new-allert-denger-style">
+                            <div *ngIf="lastName && lastName.errors && lastName.errors['required']" translate>
+                                last name requierd
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- email field -->
+                <div class="my-4">
+                    <div class="container">
+                        <div class="material-textfield">
+                            <input class="grayBackground" type="email" id="email" name="email" [(ngModel)]="user.email"
+                                placeholder=" " required #email="ngModel">
+                            <label class="grayBackground">email</label>
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="container" *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div class="material-textfield" class="alert alert-danger new-allert-denger-style">
+                            <div *ngIf="email && email.errors && email.errors['required']" translate>
+                                email requierd
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" *ngIf="dataError.emailFaild">
+                        <div class="material-textfield" class="alert alert-danger new-allert-denger-style">
+                            not valid email
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- edit password link -->
+            <div (click)="openPasswodModal()" class="px-3">
+                <p class="blueColor link">change password </p>
+            </div>
+
+            <!-- updtae button -->
+            <div class="my-3 pb-3">
+                <div class="container my-3">
+                    <div class="material-textfield">
+                        <button type="submit" [ngClass]="{'gold_btn_opacity':!personalDeatils.form.valid}"
+                            class="gold_btn" required [disabled]="!personalDeatils.form.valid">
+                            <span>
+                                Update Details
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- change password modal -->
+<div *ngIf="showPasswordModal" class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-hidden="true"
+    data-bs-backdrop="static" data-keyBoerd="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div>
+                    <button type="button" class="close" (click)="closePasswodModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <br />
+                    <br />
+                    <div class="flex-center">
+                        <h3 class="modal-title"><b>change password</b></h3>
+                    </div>
+
+                    <br /><br />
+                </div>
+
+                <div>
+
+                    <form class="my-4" role="form" #connectionDeatils="ngForm" (ngSubmit)="updateConnectionDetails()">
+
+
+                        <!-- password field -->
+                        <div class="mt-3 mb-4">
+                            <div class="container">
+                                <div class="material-textfield">
+                                    <input type="password" id="password" name="password"
+                                        [(ngModel)]="user.firstPassword" placeholder=" " required #password="ngModel"
+                                        (change)="removeLastPasswordFailed()">
+                                    <label>password</label>
+                                    <i class="fas fa-eye " id="eyeIconPassword" (click)="togglePassword()"></i>
+                                </div>
+                            </div>
+                            <div class="container" *ngIf="password.invalid && (password.dirty || password.touched)">
+                                <div class="material-textfield" class="alert alert-danger new-allert-denger-style">
+                                    <div *ngIf="password && password.errors && password.errors['required']" translate>
+                                        password is required_error
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- again password field -->
+                        <div class="mt-3 mb-4">
+                            <div class="container">
+                                <div class="material-textfield">
+                                    <input type="password" id="secoundPassword" name="secoundPassword"
+                                        [(ngModel)]="user.passwordSecond" placeholder=" " required
+                                        #secoundPassword="ngModel" (change)="removeLastPasswordFailed()">
+                                    <label>again password</label>
+                                    <i class="fas fa-eye " id="eyeIconSecoundPassword"
+                                        (click)="toggleSecoundPassword()"></i>
+                                </div>
+                            </div>
+                            <div class="container"
+                                *ngIf="secoundPassword.invalid && (secoundPassword.dirty || secoundPassword.touched)">
+                                <div class="material-textfield" class="alert alert-danger new-allert-denger-style">
+                                    <div *ngIf="secoundPassword && secoundPassword.errors && secoundPassword.errors['required']"
+                                        translate>
+                                        password is required_error
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container" *ngIf="dataError.passwordNotMutch">
+                                <div class="material-textfield" class="alert alert-danger new-allert-denger-style">
+                                    The passwords are not the same
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- save connection details button -->
+                        <div class="my-3">
+                            <div class="container my-3">
+                                <div class="material-textfield">
+                                    <button type="submit" [ngClass]="{'gold_btn_opacity':!connectionDeatils.form.valid}"
+                                        class="gold_btn" required [disabled]="!connectionDeatils.form.valid">
+                                        <span>
+                                            update password
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- close modal -->
+                        <h4 class="link blueColor" (click)="closePasswodModal()">cancel</h4>
+
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
